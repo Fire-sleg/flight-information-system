@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "New Profile",
+    "Projects": [
+      {
+        "Path": "FlightStorageService\\FlightStorageService.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "FlightClientApp\\FlightClientApp.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]
