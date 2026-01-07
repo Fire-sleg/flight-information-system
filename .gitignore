@@ -1,6 +1,57 @@
-.vs/
+# Build results
 bin/
 obj/
-*.user
+out/
+artifacts/
+publish/
+
+# IDE / Editor configs
+.vs/
+.vscode/
+.idea/
+*.iml
 *.suo
-*.slnLaunch.user
+*.user
+*.userosscache
+*.sln.docstates
+*.dbmdl
+
+# Logs / Temp
+*.log
+*.tmp
+*.temp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Dotnet artifacts
+project.lock.json
+project.fragment.lock.json
+packages/
+
+# Docker
+docker-compose.override.yml
+
+# Sensitive / Important files
+*.env
+.env.*
+appsettings.Development.json
+appsettings.Local.json
+appsettings.*.json
+
+*.pfx
+*.pem
+*.key
+*.crt
+
+*.bak
+*.mdf
+*.ldf
+*.ndf
+
+# Backups
+*.zip
+*.tar
+*.gz
+*.7z
