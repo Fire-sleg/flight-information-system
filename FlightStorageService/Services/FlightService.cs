@@ -231,6 +231,7 @@ namespace FlightStorageService.Services
             }
         }
 
+        #region Helpers
         private string ValidateAndNormalizeCity(string city)
         {
             if (string.IsNullOrWhiteSpace(city))
@@ -273,5 +274,6 @@ namespace FlightStorageService.Services
 
             return parsedDate;
         }
+        #endregion
     }
 }

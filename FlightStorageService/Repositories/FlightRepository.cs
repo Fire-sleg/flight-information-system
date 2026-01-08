@@ -9,7 +9,8 @@ namespace FlightStorageService.Repositories
         private readonly string _connectionString;
         public FlightRepository(IConfiguration config)
         {
-            _connectionString = config.GetConnectionString("FlightsDb")!;
+            _connectionString = config.GetConnectionString("FlightsDb")
+                ?? throw new InvalidOperationException("Connection string missing"); 
         }
 
         public async Task<IReadOnlyList<Flight>> GetFlightsByArrivalCityAndDateAsync(string city, DateOnly date, CancellationToken ct)
@@ -41,11 +42,15 @@ namespace FlightStorageService.Repositories
 
         public async Task<Flight?> GetFlightByNumberAsync(string flightNumber, CancellationToken ct)
         {
-            return await QuerySingleAsync("@dbo.GetFlightByNumber", 
+            return await QuerySingleAsync("dbo.GetFlightByNumber", 
                 new SqlParameter("@FlightNumber", SqlDbType.NVarChar, 10) { Value =  flightNumber },
                 ct);
         }
-        private async Task<Flight> QuerySingleAsync(string storedProcedure, SqlParameter parameters, CancellationToken ct)
+
+        
+
+        #region Helpers
+        private async Task<Flight?> QuerySingleAsync(string storedProcedure, SqlParameter parameters, CancellationToken ct)
         {
             return await QuerySingleAsync(storedProcedure, new[] { parameters }, ct);
         }
@@ -109,6 +114,7 @@ namespace FlightStorageService.Repositories
                 DurationMinutes = reader.GetInt32(reader.GetOrdinal("DurationMinutes"))
             };
         }
+        #endregion
 
     }
 
