@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "BkI+Q8Je15M=",
+  "dgSpecHash": "RAKI9zzyAgA=",
   "success": true,
   "projectFilePath": "C:\\D\\FlightInformationSystem\\FlightInformationSystem\\FlightClientApp\\FlightClientApp.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\fires\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.22.1\\microsoft.visualstudio.azure.containers.tools.targets.1.22.1.nupkg.sha512"
+  ],
   "logs": []
 }

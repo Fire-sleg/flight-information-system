@@ -77,11 +77,11 @@ namespace FlightClientApp.Controllers
 
         private async Task<IActionResult> HandleApiCallSafelyAsync(Func<Task<IReadOnlyList<Flight>>> apiAction)
         {
+            var viewModel = new FlightSearchResultViewModel();
             try
             {
-                var data = await apiAction();
-                ViewBag.Error = null;
-                return View("Results", data);
+                viewModel.Flights = await apiAction();
+                return View("Results", viewModel);
             }
             catch (APIException apiEx)
             {
@@ -90,14 +90,23 @@ namespace FlightClientApp.Controllers
                 var errorDetail = apiEx.Problem?.Detail;
                 var traceId = apiEx.Problem?.Extensions.TryGetValue("traceId", out var t) == true ? t?.ToString() : null;
 
-                var statusCodeMessage = statusCode switch
+                var statusCodeMessage = apiEx.StatusCode switch
                 {
-                    400 => "Bad request.",
-                    404 => "Not Found.",
-                    429 => "Too many requests.",
-                    500 => "Internal server error.",
-                    _ => "Unhandled error."
+                    System.Net.HttpStatusCode.BadRequest =>
+                        "Invalid search parameters. Please check your input.",
+
+                    System.Net.HttpStatusCode.NotFound =>
+                        "No flights found for the given criteria.",
+
+                    System.Net.HttpStatusCode.TooManyRequests =>
+                        "Too many requests. Please try again later.",
+
+                    System.Net.HttpStatusCode.InternalServerError =>
+                        "Server error. Please try again later.",
+
+                    _ => "Unexpected server error."
                 };
+
 
                 var errorMessage = $"{statusCode} {errorTitle}. {statusCodeMessage}";
                 if (!string.IsNullOrEmpty(errorDetail))
@@ -109,18 +118,22 @@ namespace FlightClientApp.Controllers
                     errorMessage += $" (Trace ID: {traceId})";
                 }
 
-                ViewBag.Error = errorMessage;
-                return View("Results", Enumerable.Empty<Flight>());
+                viewModel.StatusCode = statusCode;
+                viewModel.ErrorMessage = statusCodeMessage;
+
+                return View("Results", viewModel);
             }
-            catch (HttpRequestException ex)
+            catch (HttpRequestException)
             {
-                ViewBag.Error = $"API error: {ex.Message}";
-                return View("Results", Enumerable.Empty<Flight>());
+                viewModel.StatusCode = 503;
+                viewModel.ErrorMessage = "Unable to connect to the server. Please try again later.";
+                return View("Results", viewModel);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                ViewBag.Error = $": {ex.Message}";
-                return View("Results", Enumerable.Empty<Flight>());
+                viewModel.StatusCode = 500;
+                viewModel.ErrorMessage = "Unexpected application error.";
+                return View("Results", viewModel);
             }
         }
     }

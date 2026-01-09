@@ -1,4 +1,4 @@
-﻿@model List<FlightClientApp.Models.Flight>
+﻿@model FlightSearchResultViewModel
 @{
     ViewData["Title"] = "Search Results";
 }
@@ -31,7 +31,19 @@
                 <i class="fas fa-list"></i>
             </div>
             <h5>Flight Results</h5>
-            @if (Model.Any())
+            @if (Model.HasError)
+            {
+                <div class="alert alert-danger">
+                    <strong>Error</strong>
+                    @if (Model.StatusCode != null)
+                    {
+                        <span>(@Model.StatusCode)</span>
+                    }
+                    <br />
+                    @Model.ErrorMessage
+                </div>
+            }
+            else if (Model.Flights.Any())
             {
                 <table class="table table-striped">
                     <thead>
@@ -44,7 +56,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var flight in Model)
+                        @foreach (var flight in Model.Flights)
                         {
                             <tr>
                                 <td>@flight.FlightNumber</td>
@@ -59,8 +71,8 @@
             }
             else
             {
-                <div class="no-results">
-                    <i class="fas fa-exclamation-circle me-2"></i>No flights found matching your criteria.
+                <div class="alert alert-warning">
+                    No flights found.
                 </div>
             }
             <a asp-controller="Home" asp-action="Index" class="btn btn-back">

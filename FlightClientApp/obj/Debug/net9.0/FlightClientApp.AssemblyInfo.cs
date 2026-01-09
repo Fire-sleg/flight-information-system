@@ -11,10 +11,11 @@
 using System;
 using System.Reflection;
 
+[assembly: Microsoft.Extensions.Configuration.UserSecrets.UserSecretsIdAttribute("9435027e-691d-4210-9e59-f8fc2ebb7855")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("FlightClientApp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+eb0f7ccc92751e604a18dfd6fdc39bb7c9e69887")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+919d612a1b5a6b819a2b726f3e6da1dead823b23")]
 [assembly: System.Reflection.AssemblyProductAttribute("FlightClientApp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("FlightClientApp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -2,6 +2,7 @@ using FlightStorageService.Middlewares;
 using FlightStorageService.Models;
 using FlightStorageService.Repositories;
 using FlightStorageService.Services;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.HttpLogging;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
@@ -27,12 +28,12 @@ builder.Services.AddSwaggerGen(options =>
         Title = "Flight Information API",
         Version = "v1",
         Description = """
-        REST API для пошуку авіарейсів.
+        REST API for flight search.
 
-        Обмеження:
-        - Дані доступні лише для рейсів у межах наступних 7 днів
-        - Усі дати — UTC
-        - Rate limit: 60 запитів / хвилину
+        Limitations:
+        - Data is only available for flights within the next 7 days
+        - All dates are UTC
+        - Rate limit: 12 requests / 12 seconds; queue limit: 4
         """,
         Contact = new OpenApiContact
         {
@@ -90,7 +91,7 @@ builder.Services.AddRateLimiter(options =>
         context.HttpContext.Response.StatusCode = 429;
 
         await context.HttpContext.Response.WriteAsync(
-            "Занадто багато запитів. Будь ласка, спробуйте знову через кілька секунд.",
+            "Too many requests. Please try again in a few seconds.",
             cancellationToken);
 
         context.HttpContext.Response.Headers.Append("Retry-After", "12");  
@@ -104,19 +105,13 @@ builder.Services.AddMemoryCache();
 builder.Services.AddScoped<IFlightRepository, FlightRepository>();
 builder.Services.AddScoped<IFlightService, FlightService>();
 
+//HealthCheck
+builder.Services.AddHealthChecks();
+
 var app = builder.Build();
 
 // Middlewares
-
 app.UseMiddleware<ExceptionHandlingMiddleware>();
-
-app.Use(async (ctx, next) =>
-{
-    ctx.Response.Headers["X-Content-Type-Options"] = "nosniff";
-    ctx.Response.Headers["X-Frame-Options"] = "DENY";
-    ctx.Response.Headers["Referrer-Policy"] = "no-referrer";
-    await next();
-});
 
 if (app.Environment.IsDevelopment())
 {
@@ -126,11 +121,17 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpLogging();
 
-app.UseHttpsRedirection();
-
 app.UseCors("ui");
 
 app.UseRateLimiter();
+
+app.MapHealthChecks("/health/live", new HealthCheckOptions
+{
+    Predicate = _ => false
+});
+
+app.MapHealthChecks("/health/ready");
+
 
 app.MapControllers()
    .RequireRateLimiting("fixed");
