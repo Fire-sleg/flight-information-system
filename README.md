@@ -57,11 +57,18 @@ FlightInfoSystem/
 
 ## Інструкція з запуску
 
-### Крок 1: Підготовка бази даних
+### Крок 1: Клонування репозиторію
+
+```bash
+git clone https://github.com/Fire-sleg/flight-information-system.git
+cd flight-information-system
+```
+
+### Крок 2: Підготовка бази даних
 
 Запустіть SQL-скрипт `db-init/init.sql` через MS SQL Server Management Studio.
 
-### Кроки 2-3: Запуск серверної та клієнтської частин
+### Кроки 3-4: Запуск серверної та клієнтської частин
 
 ```bash
 # Запуск API сервера
