@@ -59,7 +59,7 @@ FlightInfoSystem/
 
 ### Крок 1: Підготовка бази даних
 
-Запустіть SQL-скрипт `db/init.sql` через MS SQL Server Management Studio.
+Запустіть SQL-скрипт `db-init/init.sql` через MS SQL Server Management Studio.
 
 ### Кроки 2-3: Запуск серверної та клієнтської частин
 
