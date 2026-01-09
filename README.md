@@ -69,12 +69,12 @@ cd FlightStorageService
 dotnet restore
 dotnet build
 dotnet run
-# Swagger документація буде доступна за адресою: http://localhost:3001/swagger
+# Swagger документація буде доступна за адресою: http://localhost:5001/swagger
 
 # Запуск веб-клієнта
 cd ../FlightClientApp
 dotnet restore
 dotnet build
 dotnet run
-# Веб-інтерфейс буде доступний за адресою: http://localhost:3000
+# Веб-інтерфейс буде доступний за адресою: http://localhost:5000
 ```
