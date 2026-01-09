@@ -59,7 +59,7 @@ FlightInfoSystem/
 
 ### Крок 1: Підготовка бази даних
 
-Запустіть SQL-скрипт `db/init.sql` через MS SQL Server Management Studio або інший клієнт.
+Запустіть SQL-скрипт `db/init.sql` через MS SQL Server Management Studio.
 
 ### Кроки 2-3: Запуск серверної та клієнтської частин
 
@@ -69,12 +69,16 @@ cd FlightStorageService
 dotnet restore
 dotnet build
 dotnet run
-# Swagger документація буде доступна за адресою: http://localhost:5001/swagger
+# Swagger документація буде доступна за адресою:
+http://localhost:5000/swagger
+https://localhost:5050/swagger
 
 # Запуск веб-клієнта
 cd ../FlightClientApp
 dotnet restore
 dotnet build
 dotnet run
-# Веб-інтерфейс буде доступний за адресою: http://localhost:5000
+# Веб-інтерфейс буде доступний за адресою:
+http://localhost:5001
+https://localhost:5051
 ```
