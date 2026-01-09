@@ -70,8 +70,8 @@ dotnet restore
 dotnet build
 dotnet run
 # Swagger документація буде доступна за адресою:
-http://localhost:5000/swagger
-https://localhost:5050/swagger
+# http://localhost:5000/swagger
+# https://localhost:5050/swagger
 
 # Запуск веб-клієнта
 cd ../FlightClientApp
@@ -79,6 +79,6 @@ dotnet restore
 dotnet build
 dotnet run
 # Веб-інтерфейс буде доступний за адресою:
-http://localhost:5001
-https://localhost:5051
+# http://localhost:5001
+# https://localhost:5051
 ```
