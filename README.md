@@ -57,11 +57,18 @@ FlightInfoSystem/
 
 ## Інструкція з запуску
 
-### Крок 1: Підготовка бази даних
+### Крок 1: Клонування репозиторію
 
-Запустіть SQL-скрипт `db/init.sql` через MS SQL Server Management Studio або інший клієнт.
+```bash
+git clone https://github.com/Fire-sleg/flight-information-system.git
+cd flight-information-system
+```
 
-### Кроки 2-3: Запуск серверної та клієнтської частин
+### Крок 2: Підготовка бази даних
+
+Запустіть SQL-скрипт `db-init/init.sql` через MS SQL Server Management Studio.
+
+### Кроки 3-4: Запуск серверної та клієнтської частин
 
 ```bash
 # Запуск API сервера
@@ -69,12 +76,16 @@ cd FlightStorageService
 dotnet restore
 dotnet build
 dotnet run
-# Swagger документація буде доступна за адресою: http://localhost:5001/swagger
+# Swagger документація буде доступна за адресою:
+# http://localhost:5000/swagger
+# https://localhost:5050/swagger
 
 # Запуск веб-клієнта
 cd ../FlightClientApp
 dotnet restore
 dotnet build
 dotnet run
-# Веб-інтерфейс буде доступний за адресою: http://localhost:5000
+# Веб-інтерфейс буде доступний за адресою:
+# http://localhost:5001
+# https://localhost:5051
 ```

@@ -150,8 +150,32 @@ BEGIN
 END
 GO
 
+IF OBJECT_ID('dbo.CleanupOldFlights', 'P') IS NOT NULL DROP PROCEDURE dbo.CleanupOldFlights;
+GO
+CREATE OR ALTER PROCEDURE dbo.CleanupOldFlights
+AS
+BEGIN
+    SET NOCOUNT ON;
 
--- Створення нового логіна (користувача на рівні сервера)
+    BEGIN TRY
+        BEGIN TRANSACTION;
+
+        DELETE FROM dbo.Flights
+        WHERE DepartureDateTime < SYSUTCDATETIME();
+
+        COMMIT TRANSACTION;
+
+    END TRY
+    BEGIN CATCH
+        IF @@TRANCOUNT > 0
+            ROLLBACK TRANSACTION;
+
+        THROW;
+    END CATCH
+END;
+GO
+
+
 IF NOT EXISTS (SELECT * FROM sys.sql_logins WHERE name = 'flight_api_user')
 BEGIN
     CREATE LOGIN flight_api_user WITH PASSWORD = 'flight_api_user123!';
