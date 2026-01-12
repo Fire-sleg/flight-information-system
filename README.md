@@ -27,7 +27,7 @@ FlightInfoSystem/
 ├── FlightStorageService/      # Серверна частина API
 ├── FlightClientApp/           # Клієнтський веб-додаток
 ├── CleanUpService/            # Фоновий сервіс очищення
-├── db/
+├── db-init/
 │   └── init.sql               # Скрипт ініціалізації БД
 ├── README.md
 └── .gitignore
